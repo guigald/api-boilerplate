@@ -53,7 +53,7 @@ class RouteServiceProvider extends ServiceProvider
             foreach ($routeFiles as $file) {
                 $prefix = current(explode('.', $file));
 
-                Route::prefix('v1/' . $prefix)
+                Route::prefix(' v1/' . $prefix)
                     ->middleware('api')
                     ->group(base_path("routes/api/{$file}"));
             }
