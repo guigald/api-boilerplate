@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Base\Providers;
+
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
+
+class RouteServiceProvider extends ServiceProvider
+{
+    /**
+     * The path to the "home" route for your application.
+     *
+     * Typically, users are redirected here after authentication.
+     *
+     * @var string
+     */
+    public const HOME = '/home';
+
+    /**
+     * Define your route model bindings, pattern filters, and other route configuration.
+     *
+     * @return void
+     */
+    public function boot(): void
+    {
+        $this->configureRateLimiting();
+
+        $this->mapRoutes();
+    }
+
+    /**
+     * Configure the rate limiters for the application.
+     *
+     * @return void
+     */
+    protected function configureRateLimiting(): void
+    {
+        RateLimiter::for('api', static function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+    }
+
+    private function mapRoutes(): void
+    {
+        $routeDirectory = base_path("routes/api");
+
+        $routeFiles = array_diff(scandir($routeDirectory), array('.', '..'));
+
+        $this->routes(function () use ($routeFiles) {
+            foreach ($routeFiles as $file) {
+                $prefix = current(explode('.', $file));
+
+                Route::prefix('v1/' . $prefix)
+                    ->middleware('api')
+                    ->group(base_path("routes/api/{$file}"));
+            }
+
+            Route::middleware('web')
+                ->group(base_path('routes/web.php'));
+        });
+    }
+}

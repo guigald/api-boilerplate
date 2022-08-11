@@ -1,0 +1,1275 @@
+swagger: '2.0'
+info:
+  description: Dados até D-1 do saldo de investimentos nas contas do investidor.
+  version: '1.0'
+  title: B3 Investidor - Posição
+schemes:
+  - https
+basePath: /api/position/v2
+host: Caminho_backend
+paths:
+  '/fixed-income/investors/{documentNumber}':
+    get:
+      tags:
+        - Fixed Income
+      summary: >-
+        Dados até D-1 do saldo de investimentos nas contas do investidor
+        referente a renda fixa.
+      operationId: FixedIncomePositionGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: 'Número do documento '
+          required: true
+        - in: query
+          name: referenceDate
+          type: string
+          format: date
+          description: Data de referência da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/FixedIncomePositionRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+  '/equities/investors/{documentNumber}':
+    get:
+      tags:
+        - Equities
+      summary: >-
+        Dados até D-1 do saldo de investimentos nas contas do investidor
+        referente a ação.
+      operationId: EquitiesPositionGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: 'Número do documento '
+          required: true
+        - in: query
+          name: referenceDate
+          type: string
+          format: date
+          description: Data de referência da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/EquitiesPositionRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+  '/securities-lending/investors/{documentNumber}':
+    get:
+      tags:
+        - Securities Lending
+      summary: >-
+        Dados até D-1 do saldo de investimentos nas contas do investidor
+        referente a empréstimo de ativos
+      operationId: SecurityLendingPositionGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: 'Número do documento '
+          required: true
+        - in: query
+          name: referenceDate
+          type: string
+          format: date
+          description: Data de referência da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/SecuritiesLendingPositionRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+  '/treasury-bonds/investors/{documentNumber}':
+    get:
+      tags:
+        - Treasury Bonds
+      summary: >-
+        Dados até D-1 do saldo de investimentos nas contas do investidor
+        referente a tesouro direto.
+      operationId: TreasuryBondsPositionGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: 'Número do documento '
+          required: true
+        - in: query
+          name: referenceDate
+          type: string
+          format: date
+          description: Data de referência da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/TreasuryBondsPositionRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+  '/derivatives/investors/{documentNumber}':
+    get:
+      tags:
+        - Derivatives
+      summary: >-
+        Dados até D-1 do saldo de investimentos nas contas do investidor
+        referente a  Derivativos - Swap.
+      operationId: DerivativesSwapPositionGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: 'Número do documento '
+          required: true
+        - in: query
+          name: referenceDate
+          type: string
+          format: date
+          description: Data de referência da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/DerivativesPositionRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+definitions:
+  Link:
+    type: object
+    properties:
+      self:
+        type: string
+        description: Current page link
+        example: null
+      first:
+        type: string
+        description: First page link
+        example: null
+      prev:
+        type: string
+        description: Next page link
+        example: null
+      next:
+        type: string
+        description: Next page link
+        example: null
+      last:
+        type: string
+        description: Last page link
+        example: null
+    required:
+      - self
+  Errors:
+    type: object
+    properties:
+      Errors:
+        type: array
+        items:
+          $ref: '#/definitions/Error'
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+        enum:
+          - lista codigos de erro
+        maxLength: 10
+        description: Business error code.
+        example: null
+      message:
+        type: string
+        enum:
+          - lista titulos de erro
+        maxLength: 100
+        description: Brief business error message
+        example: null
+    required:
+      - code
+      - message
+  DerivativesPositionRspData:
+    type: object
+    properties:
+      derivativesPositions:
+        type: array
+        items:
+          $ref: '#/definitions/DerivativesPosition'
+  DerivativesPosition:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        maxLength: 100
+        description: Armazena as categorias de cada produto
+        example: XXXXX
+      productTypeName:
+        type: string
+        maxLength: 100
+        description: 'Tipos de produtos utilizados '
+        example: XXXXX
+      markingIndicator:
+        type: string
+        enum:
+          - true
+          - false
+        maxLength: 5
+        description: Indica se o investidor possui gravames
+        example: XXXXX
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      participantName:
+        type: string
+        maxLength: 120
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      startDate:
+        type: string
+        format: date
+        description: Data de inicio
+        example: null
+      expirationDate:
+        type: string
+        format: date
+        description: Data de vencimento
+        example: null
+      investorPositionTypeName:
+        type: string
+        maxLength: 20
+        description: Posicao do investidor (Comprador / Vendedor)
+        example: XXXXX
+      derivativeQuantity:
+        type: number
+        description: Posicao do investidor (Comprador / Vendedor)
+        example: null
+      updateValue:
+        type: number
+        description: Valor atualizado
+        example: '12,01'
+      baseValue:
+        type: number
+        description: Valor Base
+        example: 0
+      underlyingInstrument:
+        type: number
+        description: ''
+        example: null
+      assetDescription:
+        type: string
+        description: ''
+        example: null
+      counterpartName:
+        type: string
+        description: Contraparte  (Termo)
+        example: null
+      unitPrice:
+        type: number
+        description: Unit Price
+        example: null
+      ajustedQuoted:
+        type: number
+        description: Preço de ajuste (Futuro)
+        example: null
+      applicationValue:
+        type: number
+        description: Valor aplicado (BOX)
+        example: null
+      redemptionValue:
+        type: number
+        description: Valor do resgate
+        example: null
+      availableQuantity:
+        type: number
+        description: >-
+          Quantidade disponível para usufruto do cliente (vender ou usufruir –
+          qtde de ativos) 
+        example: 29
+      unavailableQuantity:
+        type: number
+        description: 'Quantidade bloqueada para usufruto do cliente (gravames) '
+        example: 1
+      activeTips:
+        type: array
+        items:
+          $ref: '#/definitions/ActiveTip'
+      passiveTips:
+        type: array
+        items:
+          $ref: '#/definitions/PassiveTip'
+      reasons:
+        type: array
+        items:
+          $ref: '#/definitions/Reason'
+      calls:
+        type: array
+        items:
+          $ref: '#/definitions/Call'
+      puts:
+        type: array
+        items:
+          $ref: '#/definitions/Put'
+    required:
+      - documentNumber
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - markingIndicator
+      - tickerSymbol
+      - participantName
+      - participantDocumentNumber
+      - startDate
+      - expirationDate
+      - investorPositionTypeName
+      - derivativeQuantity
+      - updateValue
+      - baseValue
+      - underlyingInstrument
+      - assetDescription
+      - counterpartName
+      - unitPrice
+      - ajustedQuoted
+      - applicationValue
+      - redemptionValue
+      - availableQuantity
+      - unavailableQuantity
+  ActiveTip:
+    type: object
+    properties:
+      activeUnderlyngInstrument:
+        type: string
+        maxLength: 10
+        description: Ativo ou indexador subjacente da ponta ativa
+        example: XXX
+      activePercent:
+        type: number
+        description: Percentual da ponta ativa
+        example: null
+      activeInterestRate:
+        type: number
+        description: Taxa de juro da ponta ativa
+        example: null
+      activeValue:
+        type: number
+        description: Valor da ponta ativa
+        example: null
+  PassiveTip:
+    type: object
+    properties:
+      passiveUnderlyngInstrument:
+        type: string
+        maxLength: 10
+        description: Ativo ou indexador subjacente da ponta passiva
+        example: XXXXX
+      passivePercent:
+        type: number
+        description: Percentual da ponta passiva
+        example: null
+      passiveInterestRate:
+        type: number
+        description: Taxa de juro da ponta passiva
+        example: null
+      passiveValue:
+        type: number
+        description: Valor da ponta passiva
+        example: null
+  Reason:
+    type: object
+    properties:
+      reasonName:
+        type: string
+        enum:
+          - PENHOR
+          - CESSÃO/ ALIENAÇÃO FIDUCIÁRIA
+          - COBERTURA GARANTIAS BTC
+          - GARANTIAS DE DERIVATIVOS
+          - ATIVOS EM GARANTIA FILCB
+          - PETROBRAS - COBERTURA/GARANTIA
+          - GARANTIAS UTVM
+          - BLOQ. JUDICIAL OU ADMINIS. - AG CUSTODIA
+          - BLOQUEIO ACORDO DE ACIONISTA
+          - BLOQUEIO DE ATIVOS E RECURSOS FINANCEIRO
+          - BLOQUEIOS DE ATIVOS
+          - BLOQUEIO DE VENDA
+          - BLOQUEIO POR SOLICITACAO DE RETIRADA
+          - BLOQUEIO POR SOLICITACAO DO AG. CUSTODIA
+          - BLOQUEIO INSTRUCAO CVM 400
+          - BLOQUEIO DE ATIVOS
+          - RESERVA TÉCNICA
+        maxLength: 100
+        description: Motivo da garantia indisponível
+        example: XXXXX
+      collateralQuantity:
+        type: number
+        description: Quantidade indisponível de acordo com o motivo
+        example: 10
+      counterpartName:
+        type: string
+        maxLength: 100
+        description: Contraparte do motivo indisponivel
+        example: XXXXX
+    required:
+      - reasonName
+      - collateralQuantity
+      - counterpartName
+  Call:
+    type: object
+    properties:
+      exercisePrice:
+        type: number
+        description: >-
+          Preço pre-determinado em que o titular de um derivativo vai comprar ou
+          vender um instrumento subjacente.
+        example: '10,01'
+      referencePrice:
+        type: number
+        description: Fornece preço de referência.
+        example: '10,00'
+      optionStyle:
+        type: string
+        maxLength: 10
+        description: >-
+          Especifica como uma opção pode ser exercida (americana, europeia) -
+          (Opção)
+        example: null
+      expirationCode:
+        type: string
+        maxLength: 4
+        description: Série do papel (Opção)
+        example: null
+  Put:
+    type: object
+    properties:
+      exercisePrice:
+        type: number
+        description: >-
+          Preço pre-determinado em que o titular de um derivativo vai comprar ou
+          vender um instrumento subjacente.
+        example: '10,01'
+      referencePrice:
+        type: number
+        description: Fornece preço de referência.
+        example: '10,00'
+      optionStyle:
+        type: string
+        maxLength: 10
+        description: >-
+          Especifica como uma opção pode ser exercida (americana, europeia) -
+          (Opção)
+        example: null
+      expirationCode:
+        type: string
+        maxLength: 4
+        description: Série do papel (Opção)
+        example: null
+      coveredUncoveredCollateral:
+        type: string
+        description: Garantia coberta ou descoberta
+        example: null
+  DerivativesPositionRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/DerivativesPositionRspData'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links
+  DataFixedIncomePositionRsp:
+    type: object
+    properties:
+      fixedIncomePositions:
+        type: array
+        items:
+          $ref: '#/definitions/FixedIncomePosition'
+  FixedIncomePosition:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        maxLength: 100
+        description: Armazena as categorias de cada produto
+        example: XXXXX
+      productTypeName:
+        type: string
+        maxLength: 100
+        description: Tipos de produtos utilizados em  renda fixa
+        example: XXXXX
+      markingIndicator:
+        type: string
+        enum:
+          - true
+          - false
+        maxLength: 5
+        description: Indica se o investidor possui gravames
+        example: XXXXX
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      corporationName:
+        type: string
+        maxLength: 250
+        description: Nome da empresa (Emissor)
+        example: XXXXXX
+      participantName:
+        type: string
+        maxLength: 120
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      issueDate:
+        type: string
+        format: date
+        description: 'Data de Emissão '
+        example: null
+      expirationDate:
+        type: string
+        format: date
+        description: Data de vencimento
+        example: null
+      fixedIncomeQuantity:
+        type: number
+        description: Quantidade do ativo
+        example: null
+      updatedUnitPrice:
+        type: number
+        description: Preço unitário atualizado
+        example: '12,01'
+      applicationValue:
+        type: number
+        description: 'Valor aplicado '
+        example: '10,01'
+      assetDescription:
+        type: string
+        maxLength: 100
+        description: Nome do título do tesouro direto
+        example: null
+      updateValue:
+        type: number
+        description: Valor atualizado
+        example: '12,01'
+      updatedUnitPriceMTM:
+        type: number
+        description: Preço unitário atualizado MTM (Metogologia cálculo Marcação a Mercado)
+        example: '1,01'
+      updateValueMTM:
+        type: number
+        description: Valor atualizado MTM (Metogologia cálculo Marcação a Mercado)
+        example: '1,01'
+      indexShortName:
+        type: string
+        maxLength: 10
+        description: >-
+          Nome abreviado do indexador de atualização monetária ou renumeração 
+
+          Domínio
+
+          SEM INDICE DI DOLAR-PTAX800  EURO-PTAX800  IGP - M IGP - DI INPC IPCA
+          IPC - M IPC - FIPE INCC - M INCC - DI PREFIXADO SELIC TAXA ANBID TR
+          TJLP TBF
+        example: null
+      fixedIncomeModalityType:
+        type: string
+        maxLength: 15
+        description: Modalidade do ativo (registrado ou depoistado)
+        example: null
+      availableQuantity:
+        type: number
+        description: >-
+          Quantidade disponível para usufruto do cliente (vender ou usufruir –
+          qtde de ativos) 
+        example: 29
+      unavailableQuantity:
+        type: number
+        description: 'Quantidade bloqueada para usufruto do cliente (gravames) '
+        example: 1
+      reasons:
+        type: array
+        items:
+          $ref: '#/definitions/ReasonList'
+    required:
+      - documentNumber
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - markingIndicator
+      - tickerSymbol
+      - corporationName
+      - participantName
+      - participantDocumentNumber
+      - issueDate
+      - expirationDate
+      - fixedIncomeQuantity
+      - assetDescription
+      - availableQuantity
+  ReasonList:
+    type: object
+    properties:
+      reasonName:
+        type: string
+        enum:
+          - PENHOR
+          - CESSÃO/ ALIENAÇÃO FIDUCIÁRIA
+          - COBERTURA GARANTIAS BTC
+          - GARANTIAS DE DERIVATIVOS
+          - ATIVOS EM GARANTIA FILCB
+          - PETROBRAS - COBERTURA/GARANTIA
+          - GARANTIAS UTVM
+          - BLOQ. JUDICIAL OU ADMINIS. - AG CUSTODIA
+          - BLOQUEIO ACORDO DE ACIONISTA
+          - BLOQUEIO DE ATIVOS E RECURSOS FINANCEIRO
+          - BLOQUEIOS DE ATIVOS
+          - BLOQUEIO DE VENDA
+          - BLOQUEIO POR SOLICITACAO DE RETIRADA
+          - BLOQUEIO POR SOLICITACAO DO AG. CUSTODIA
+          - BLOQUEIO INSTRUCAO CVM 400
+          - BLOQUEIO DE ATIVOS
+          - RESERVA TÉCNICA
+        maxLength: 100
+        description: Motivo da garantia indisponível
+        example: XXXXX
+      collateralQuantity:
+        type: number
+        description: Quantidade indisponível de acordo com o motivo
+        example: 10
+      counterpartName:
+        type: string
+        maxLength: 100
+        description: Contraparte do motivo indisponivel
+        example: XXXXX
+    required:
+      - reasonName
+      - collateralQuantity
+      - counterpartName
+  FixedIncomePositionRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/DataFixedIncomePositionRsp'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links
+  DataEquitiesPositionRsp:
+    type: object
+    properties:
+      equitiesPositions:
+        type: array
+        items:
+          $ref: '#/definitions/EquitiesPosition'
+  EquitiesPosition:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        maxLength: 100
+        description: Armazena as categorias de cada produto
+        example: XXXXX
+      productTypeName:
+        type: string
+        maxLength: 100
+        description: Tipos de produtos utilizados em  renda variavel
+        example: XXXXX
+      markingIndicator:
+        type: string
+        enum:
+          - true
+          - false
+        maxLength: 5
+        description: Indica se o investidor possui gravames
+        example: XXXXX
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      corporationName:
+        type: string
+        maxLength: 250
+        description: Nome da empresa (Emissor)
+        example: XXXXXX
+      specificationCode:
+        type: string
+        maxLength: 10
+        description: 'Código de especificação das ações ON, PN, e assim por diante.'
+        example: XXXXXX
+      participantName:
+        type: string
+        maxLength: 120
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      equitiesQuantity:
+        type: number
+        description: Quantidade do ativo
+        example: null
+      closingPrice:
+        type: number
+        description: Preço de fechamento
+        example: null
+      updateValue:
+        type: number
+        description: Valor atualizado
+        example: '12,01'
+      isin:
+        type: string
+        maxLength: 12
+        description: >-
+          INTERNATIONAL SECURITIES IDENTIFICATION NUMBER – É uma padronização
+          internacional na codificação de títulos financeiros, atribuindo a cada
+          ativo um código único de identificação. O código para os títulos e
+          valores mobiliários brasileiros apresenta a estrutura BR AAAA BBB CC
+          7, onde a) os dois primeiros caracteres (BR) identificam o código do
+          BRASIL; b) os quatro caracteres (AAAA) são alfanuméricos e identificam
+          o emissor; c) os três caracteres (BBB) são alfanuméricos e identificam
+          o tipo de ativo, podendo ter sequência automática na segunda posição
+          (sequência 1) e na terceira posição (sequência 2) ou não ter qualquer
+          sequência; d) os dois caracteres (CC) são alfanuméricos e identificam
+          a espécie, quando se tratar de ações, ou representam uma sequência
+          automática, para identificar cada emissão de título e valor
+          mobiliário, quando se tratar de outras categorias; e e) o último
+          caractere (7) é o dígito de controle.
+        example: XXXXX
+      distributionIdentification:
+        type: integer
+        minimum: -2147483648
+        maximum: 2147483647
+        description: >-
+          Código de distribuição do papel  Este código identifica a versão do
+          ativo. O par "ISIN" + "Código de Distribuição" é necessário para
+          instrumentos que têm depositário, como ações e ouro.  Não há
+          distribuição de derivativos. 
+        example: null
+      bookkeeperName:
+        type: string
+        maxLength: 20
+        description: Nome do escriturador
+        example: XXXXXX
+      availableQuantity:
+        type: number
+        description: >-
+          Quantidade disponível para usufruto do cliente (vender ou usufruir –
+          qtde de ativos) 
+        example: 29
+      unavailableQuantity:
+        type: number
+        description: 'Quantidade bloqueada para usufruto do cliente (gravames) '
+        example: 1
+      administratorName:
+        type: string
+        maxLength: 50
+        description: Nome do administrador
+        example: XXXXXX
+      reasons:
+        type: array
+        items:
+          $ref: '#/definitions/ReasonList'
+    required:
+      - documentNumber
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - markingIndicator
+      - tickerSymbol
+      - participantName
+      - participantDocumentNumber
+      - equitiesQuantity
+      - closingPrice
+      - updateValue
+      - isin
+      - distributionIdentification
+      - availableQuantity
+      - unavailableQuantity
+      - administratorName
+  EquitiesPositionRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/DataEquitiesPositionRsp'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links
+  DataSecuritiesLendingPositionRsp:
+    type: object
+    properties:
+      securityLendingPositions:
+        type: array
+        items:
+          $ref: '#/definitions/SecurityLendingPosition'
+  SecurityLendingPosition:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        maxLength: 100
+        description: Armazena as categorias de cada produto
+        example: XXX
+      productTypeName:
+        type: string
+        maxLength: 100
+        description: Tipos de produtos utilizados em  renda variável
+        example: XXX
+      markingIndicator:
+        type: string
+        enum:
+          - true
+          - false
+        maxLength: 5
+        description: Indica se o investidor possui marcação de gravame
+        example: XXX
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXX
+      corporationName:
+        type: string
+        maxLength: 250
+        description: Este campo possui o nome da instituição.
+        example: XXX
+      sideLenderBorrowerName:
+        type: string
+        maxLength: 50
+        description: Posição do Investidor (Tomador ou Doador)
+        example: XXX
+      participantName:
+        type: string
+        maxLength: 120
+        description: 'Nome do participante (Corretora) '
+        example: XXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      lenderBorrowerRate:
+        type: number
+        description: Taxa do doador ou tomador
+        example: '1,25'
+      lenderBorrowerComissionRate:
+        type: number
+        description: Taxa de comissão do doador ou tomador
+        example: '1,35'
+      securitiesLendingQuantity:
+        type: number
+        description: Quantidade do ativo
+        example: 10
+      closingPrice:
+        type: number
+        description: Preço de fechamento
+        example: 11.5
+      updateValue:
+        type: number
+        description: Valor atualizado
+        example: '12,01'
+      issueDate:
+        type: string
+        format: date
+        description: Data de Registro do Aluguel (Emissão)
+        example: '2020-01-01'
+      expirationDate:
+        type: string
+        format: date
+        description: Data de vencimento
+        example: '2020-01-01'
+      contractNumber:
+        type: integer
+        minimum: -2147483648
+        maximum: 2147483647
+        description: Número do contrato
+        example: 123456
+      tenderEarlySettlementIndicator:
+        type: boolean
+        description: Indicador Liquidação Antecipada OPA
+        example: null
+      earlySettlementIndicator:
+        type: boolean
+        description: Indicador de permissão de liquidação antecipada
+        example: null
+    required:
+      - documentNumber
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - markingIndicator
+      - tickerSymbol
+      - corporationName
+      - sideLenderBorrowerName
+      - participantName
+      - participantDocumentNumber
+      - lenderBorrowerRate
+      - lenderBorrowerComissionRate
+      - securitiesLendingQuantity
+      - closingPrice
+      - updateValue
+      - issueDate
+      - expirationDate
+      - contractNumber
+      - tenderEarlySettlementIndicator
+      - earlySettlementIndicator
+  SecuritiesLendingPositionRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/DataSecuritiesLendingPositionRsp'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links
+  DataTreasuryBondsPositionRsp:
+    type: object
+    properties:
+      treasuryBondsPositions:
+        type: array
+        items:
+          $ref: '#/definitions/TreasuryBondsPosition'
+  TreasuryBondsPosition:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        maxLength: 100
+        description: Armazena as categorias de cada produto
+        example: XXXXX
+      productTypeName:
+        type: string
+        maxLength: 100
+        description: Tipos de produtos utilizados em  renda fixa
+        example: XXXXX
+      markingIndicator:
+        type: string
+        enum:
+          - true
+          - false
+        maxLength: 5
+        description: Indica se o investidor possui marcação de gravame
+        example: XXXXX
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      assetDescription:
+        type: string
+        maxLength: 100
+        description: Nome do título do tesouro direto
+        example: null
+      participantName:
+        type: string
+        maxLength: 120
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      expirationDate:
+        type: string
+        format: date
+        description: Data de vencimento
+        example: null
+      treasuryBondsQuantity:
+        type: number
+        description: Quantidade do ativo
+        example: null
+      applicationValue:
+        type: number
+        description: Valor aplicado
+        example: '10,01'
+      updateValue:
+        type: number
+        description: Valor atualizado
+        example: '12,01'
+      isin:
+        type: string
+        maxLength: 12
+        description: >-
+          INTERNATIONAL SECURITIES IDENTIFICATION NUMBER – É uma padronização
+          internacional na codificação de títulos financeiros, atribuindo a cada
+          ativo um código único de identificação. O código para os títulos e
+          valores mobiliários brasileiros apresenta a estrutura BR AAAA BBB CC
+          7, onde a) os dois primeiros caracteres (BR) identificam o código do
+          BRASIL; b) os quatro caracteres (AAAA) são alfanuméricos e identificam
+          o emissor; c) os três caracteres (BBB) são alfanuméricos e identificam
+          o tipo de ativo, podendo ter sequência automática na segunda posição
+          (sequência 1) e na terceira posição (sequência 2) ou não ter qualquer
+          sequência; d) os dois caracteres (CC) são alfanuméricos e identificam
+          a espécie, quando se tratar de ações, ou representam uma sequência
+          automática, para identificar cada emissão de título e valor
+          mobiliário, quando se tratar de outras categorias; e e) o último
+          caractere (7) é o dígito de controle.
+        example: XXXXX
+      interestRate:
+        type: number
+        description: Taxa em percentual de rentabilidade do ativo
+        example: null
+      indexShortName:
+        type: string
+        maxLength: 10
+        description: >-
+          Nome abreviado do indexador de atualização monetária ou renumeração 
+
+          Domínio
+
+          SEM INDICE DI DOLAR-PTAX800  EURO-PTAX800  IGP - M IGP - DI INPC IPCA
+          IPC - M IPC - FIPE INCC - M INCC - DI PREFIXADO SELIC TAXA ANBID TR
+          TJLP TBF
+        example: null
+      grossAmount:
+        type: number
+        description: Valor bruto
+        example: null
+      netValue:
+        type: number
+        description: Valor Líquido a receber
+        example: '15,01'
+    required:
+      - documentNumber
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - markingIndicator
+      - tickerSymbol
+      - assetDescription
+      - participantName
+      - participantDocumentNumber
+      - expirationDate
+      - treasuryBondsQuantity
+      - applicationValue
+      - updateValue
+      - isin
+      - interestRate
+      - indexShortName
+      - grossAmount
+      - netValue
+  TreasuryBondsPositionRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/DataTreasuryBondsPositionRsp'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links

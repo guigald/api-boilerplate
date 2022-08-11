@@ -1,0 +1,394 @@
+swagger: '2.0'
+info:
+  description: >-
+    Dados até D-1 dos eventos corporativos de renda variável provisionados por
+    investidor.
+  version: '1.0'
+  title: B3 Investidor - Eventos Provisionados
+schemes:
+  - https
+basePath: /api/provisioned-events/v2
+host: Caminho_backend
+tags:
+  - name: Provisioned Events
+paths:
+  '/investors/{documentNumber}':
+    get:
+      tags:
+        - Provisioned Events
+      summary: >-
+        Dados até D-1 dos eventos corporativos de renda variável provisionados
+        por investidor.
+      operationId: ProvisionedEventsGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: 'Número do documento '
+          required: true
+        - in: query
+          name: referenceDate
+          type: string
+          format: date
+          description: Data de referência da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/ProvisionedEventsRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+definitions:
+  Data:
+    type: object
+    properties:
+      provisionedEvents:
+        type: array
+        items:
+          $ref: '#/definitions/ProvisionedEvents'
+  Link:
+    type: object
+    properties:
+      self:
+        type: string
+        description: Current page link
+        example: null
+      first:
+        type: string
+        description: First page link
+        example: null
+      prev:
+        type: string
+        description: Next page link
+        example: null
+      next:
+        type: string
+        description: Next page link
+        example: null
+      last:
+        type: string
+        description: Last page link
+        example: null
+    required:
+      - self
+  Errors:
+    type: object
+    properties:
+      Errors:
+        type: array
+        items:
+          $ref: '#/definitions/Error'
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+        description: Business error code.
+        example: null
+      message:
+        type: string
+        description: Brief business error message
+        example: null
+    required:
+      - code
+      - message
+  ProvisionedEvents:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        maxLength: 100
+        description: Armazena as categorias de cada produto. ExRENDA VARIAVEL
+        example: XXXXX
+      productTypeName:
+        type: string
+        maxLength: 100
+        description: |-
+          Tipos de produtos utilizados em  renda variável.
+          Dominio
+          - ACOES
+          - BDRs
+          - FUNDOS IMOBILIARIOS
+        example: XXXXX
+      corporateActionTypeDescription:
+        type: string
+        enum:
+          - DIVIDENDO
+          - RESTITUIÇÃO DE CAPITAL
+          - BONIFICAÇÃO EM DINHEIRO
+          - JUROS SOBRE CAPITAL PRÓPRIO
+          - RENDIMENTO
+          - JUROS
+          - AMORTIZAÇÃO
+          - PREMIO
+          - ATUALIZAÇÃO MONETÁRIA
+          - BONIFICAÇÃO EM ATIVOS
+          - RESTITUIÇÃO CAPITAL EM AÇÕES
+          - RESTITUIÇÃO CAPITALCOM REDUÇÃO DO NÚMERO DE AÇÕES
+          - DESDOBRAMENTO DE AÇÕES
+          - GRUPAMENTO
+          - SUBSCRIÇÃO
+          - PRIORIDADE DE SUBSCRICAO
+          - EXERCICIO DE SUBSCRICAO
+          - SUBSCRICAO COM RENUNCIA DO DIREITO DE PREFERENCIA
+          - INCORPORAÇÃO
+          - FUSÃO
+          - CANCELAMENTO DE FRAÇÕES
+          - LEILÃO DE FRAÇÕES
+          - DOAÇÃO DE FRAÇÕES
+          - ADMINISTRAÇÃO DE FRAÇÕES
+          - COMPRA DE FRAÇÕES
+          - VENDA DE FRAÇÕES
+          - CISÃO COM RED. DE CAPITAL
+          - CISÃO COM RED. DE CAPITAL E QTDE
+          - ATUALIZACAO
+          - EVENTO COM MÚLTIPLOS REQUISITOS E RESULTADOS
+          - RESGATE PARCIAL RENDA FIXA
+          - RESGATE RENDA FIXA
+          - CONVERSÃO DE ATIVOS
+          - DISSIDÊNCIA
+          - RESGATE RENDA VARIÁVEL
+          - RENDIMENTO LÍQUIDO
+          - SOBRAS DE SUBSCRIÇÃO
+        maxLength: 100
+        description: "Descrição do Tipo de Evento Corporativo\nDominio\nDIVIDENDO\_ RESTITUIÇÃO DE CAPITAL\_ BONIFICAÇÃO EM DINHEIRO\_ JUROS SOBRE CAPITAL PRÓPRIO\_ RENDIMENTO\_ JUROS\_ AMORTIZAÇÃO\_ PREMIO\_ ATUALIZAÇÃO MONETÁRIA\_ BONIFICAÇÃO EM ATIVOS\_ RESTITUIÇÃO CAPITAL EM AÇÕES\_ RESTITUIÇÃO CAPITALCOM REDUÇÃO DO NÚMERO DE AÇÕES\_ DESDOBRAMENTO DE AÇÕES\_ GRUPAMENTO\_ SUBSCRIÇÃO\_ PRIORIDADE DE SUBSCRICAO\_ EXERCICIO DE SUBSCRICAO\_ SUBSCRICAO COM RENUNCIA DO DIREITO DE PREFERENCIA\_ INCORPORAÇÃO\_ FUSÃO\_ CANCELAMENTO DE FRAÇÕES\_ LEILÃO DE FRAÇÕES\_ DOAÇÃO DE FRAÇÕES\_ ADMINISTRAÇÃO DE FRAÇÕES\_ COMPRA DE FRAÇÕES\_ VENDA DE FRAÇÕES\_ CISÃO COM RED. DE CAPITAL\_ CISÃO COM RED. DE CAPITAL E QTDE\_ ATUALIZACAO\_ EVENTO COM MÚLTIPLOS REQUISITOS E RESULTADOS\_ RESGATE PARCIAL RENDA FIXA\_ RESGATE RENDA FIXA\_ CONVERSÃO DE ATIVOS\_ DISSIDÊNCIA\_ RESGATE RENDA VARIÁVEL\_ RENDIMENTO LÍQUIDO\_ SOBRAS DE SUBSCRIÇÃO "
+        example: XXXXX
+      paymentDate:
+        type: string
+        format: date
+        description: Data de pagamento.
+        example: '2020-01-01'
+      participantName:
+        type: string
+        maxLength: 120
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      eventValue:
+        type: number
+        description: >-
+          Valor do Evento Corporativo, este valor pode estar expresso em fator
+          ou em dinheiro.
+
+          Para eventos em dinheiro, este campo trará valor monetário Para
+          eventos em ativo/voluntário esse campo trará um fator
+        example: '10,01'
+      eventQuantity:
+        type: number
+        description: 'Quantidade de ativos que para calculo do evento corporativo '
+        example: 30
+      netValue:
+        type: number
+        description: Valor Líquido a receber
+        example: '10,01'
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      isin:
+        type: string
+        maxLength: 12
+        description: >-
+          INTERNATIONAL SECURITIES IDENTIFICATION NUMBER – É uma padronização
+          internacional na codificação de títulos financeiros, atribuindo a cada
+          ativo um código único de identificação. O código para os títulos e
+          valores mobiliários brasileiros apresenta a estrutura BR AAAA BBB CC
+          7, onde a) os dois primeiros caracteres (BR) identificam o código do
+          BRASIL; b) os quatro caracteres (AAAA) são alfanuméricos e identificam
+          o emissor; c) os três caracteres (BBB) são alfanuméricos e identificam
+          o tipo de ativo, podendo ter sequência automática na segunda posição
+          (sequência 1) e na terceira posição (sequência 2) ou não ter qualquer
+          sequência; d) os dois caracteres (CC) são alfanuméricos e identificam
+          a espécie, quando se tratar de ações, ou representam uma sequência
+          automática, para identificar cada emissão de título e valor
+          mobiliário, quando se tratar de outras categorias; e e) o último
+          caractere (7) é o dígito de controle.
+        example: XXXXX
+      distributionIdentification:
+        type: integer
+        minimum: -2147483648
+        maximum: 2147483647
+        description: >-
+          Código de distribuição do papel  Este código identifica a versão do
+          ativo. O par "ISIN" + "Código de Distribuição" é necessário para
+          instrumentos que têm depositário, como ações e ouro.  Não há
+          distribuição de derivativos. 
+        example: 1
+      bookkeeperName:
+        type: string
+        maxLength: 20
+        description: >-
+          É o nome simplificado da instituição devidamente habilitada ou
+          autorizada para a prestação de serviço de escrituração de Cotas,
+          contratada por Administrador Legal. 
+        example: XXXXXX
+      corporationName:
+        type: string
+        maxLength: 250
+        description: Este campo possui o nome da instituição.
+        example: XXXXXX
+      specificationCode:
+        type: string
+        maxLength: 10
+        description: 'Código de especificação das ações ON, PN, e assim por diante.'
+        example: XXXXXX
+      approvalDate:
+        type: string
+        format: date
+        description: Data de aprovação da deliberação do evento pelo emissor
+        example: '2020-01-01'
+      updateDate:
+        type: string
+        format: date
+        description: >-
+          Data atualização do evento, data do provisionamento consideração as
+          liquidação das negociações feitas na data base. 
+        example: '2020-01-01'
+      specialExDate:
+        type: string
+        format: date
+        description: Data Ex
+        example: '2020-01-01'
+      incomeTaxPercent:
+        type: number
+        description: 'Percentual de imposto de renda. '
+        example: null
+      incomeTaxAmount:
+        type: number
+        description: Valor do imposto de renda
+        example: null
+      grossAmount:
+        type: number
+        description: Valor bruto
+        example: '10,01'
+      availableQuantity:
+        type: number
+        description: >-
+          Quantidade disponível para usufruto do cliente (vender ou usufruir –
+          qtde de ativos) 
+        example: 29
+      unavailableQuantity:
+        type: number
+        description: Total blocked
+        example: null
+      reasons:
+        type: array
+        items:
+          $ref: '#/definitions/reasons'
+    required:
+      - documentNumber
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - corporateActionTypeDescription
+      - participantName
+      - participantDocumentNumber
+      - eventValue
+      - eventQuantity
+      - netValue
+      - tickerSymbol
+      - isin
+      - distributionIdentification
+      - bookkeeperName
+      - corporationName
+      - approvalDate
+      - updateDate
+      - specialExDate
+      - incomeTaxPercent
+      - incomeTaxAmount
+      - grossAmount
+      - availableQuantity
+      - unavailableQuantity
+  reasons:
+    type: object
+    properties:
+      reasonName:
+        type: string
+        enum:
+          - PENHOR
+          - CESSÃO/ ALIENAÇÃO FIDUCIÁRIA
+          - COBERTURA GARANTIAS BTC
+          - GARANTIAS DE DERIVATIVOS
+          - ATIVOS EM GARANTIA FILCB
+          - PETROBRAS - COBERTURA/GARANTIA
+          - GARANTIAS UTVM
+          - BLOQ. JUDICIAL OU ADMINIS. - AG CUSTODIA
+          - BLOQUEIO ACORDO DE ACIONISTA
+          - BLOQUEIO DE ATIVOS E RECURSOS FINANCEIRO
+          - BLOQUEIOS DE ATIVOS
+          - BLOQUEIO DE VENDA
+          - BLOQUEIO POR SOLICITACAO DE RETIRADA
+          - BLOQUEIO POR SOLICITACAO DO AG. CUSTODIA
+          - BLOQUEIO INSTRUCAO CVM 400
+          - BLOQUEIO DE ATIVOS
+          - RESERVA TÉCNICA
+        maxLength: 100
+        description: Motivo da garantia indisponível
+        example: XXXXX
+      collateralQuantity:
+        type: number
+        description: Collateral Product Quantity
+        example: null
+      counterpartName:
+        type: string
+        maxLength: 100
+        description: Contraparte do motivo indisponivel
+        example: XXXXX
+    required:
+      - reasonName
+      - collateralQuantity
+      - counterpartName
+  ProvisionedEventsRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Data'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links

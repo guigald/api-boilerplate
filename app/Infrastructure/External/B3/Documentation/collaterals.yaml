@@ -1,0 +1,243 @@
+swagger: '2.0'
+info:
+  description: >-
+    A API de garantias tem como objetivo trazer o total das garantias
+    depositadas na conta do investidor e o provisionamento do risco sem
+    garantias
+  version: '1.0'
+  title: B3 Investidor - Garantias
+schemes:
+  - https
+basePath: /api/collaterals/v2
+host: Caminho_backend
+tags:
+  - name: Collateral
+paths:
+  '/investors/{documentNumber}':
+    get:
+      tags:
+        - Collateral
+      summary: >-
+        Dados até D-1 do total de garantias depositadas na conta do investidor e
+        provisionamento do risco sem garantias.
+      operationId: CollateralGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: 'Número do documento '
+          required: true
+        - in: query
+          name: referenceDate
+          type: string
+          format: date
+          description: Data de referência da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+        - in: query
+          name: page-size
+          type: integer
+          description: Total number of records per page.
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/CollaterallRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+definitions:
+  Product:
+    type: object
+    properties:
+      productName:
+        type: string
+        maxLength: 175
+        description: Guaranty product name
+        example: null
+      collateralType:
+        type: string
+        maxLength: 50
+        description: >-
+          Collateral Type (Garantia Financeira, Título Privado de Renda Fixa,
+          Ação/ETF/UNIT/Outros, Título Público Federal SELIC, Moeda Nacional,
+          Título Internacional, Moeda Estrangeira, Cédula de Produto Rural,
+          Fundos de Investimento, Ouro) 
+        example: null
+      holder:
+        type: boolean
+        description: Titular (0 - Não / 1 - Sim)
+        example: null
+      collateralQuantity:
+        type: number
+        description: Collateral Product Quantity
+        example: null
+      unitPrice:
+        type: number
+        description: Unit Price
+        example: null
+      collateralValue:
+        type: number
+        description: Collateral Value
+        example: null
+      tickerSymbol:
+        type: string
+        maxLength: 12
+        description: Instrumento Financeiro.
+        example: null
+    required:
+      - productName
+      - collateralType
+      - holder
+      - collateralQuantity
+      - unitPrice
+      - collateralValue
+      - tickerSymbol
+  Participant:
+    type: object
+    properties:
+      participantName:
+        type: string
+        maxLength: 120
+        description: Nome do participante (corretora)
+        example: XXXXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      totalCollateral:
+        type: number
+        description: >-
+          Somatória de todos ativos e valor em espécie depósitados e aceitos
+          como garantia
+        example: '100,01'
+      riskWithoutCollateral:
+        type: number
+        description: Exposição ao Risco sem garantias.
+        example: '10,01'
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/Product'
+    required:
+      - participantName
+      - participantDocumentNumber
+      - totalCollateral
+      - riskWithoutCollateral
+      - products
+  COLLATERAL:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      participants:
+        type: array
+        items:
+          $ref: '#/definitions/Participant'
+    required:
+      - documentNumber
+      - referenceDate
+      - participants
+  Data:
+    type: object
+    properties:
+      collaterals:
+        type: array
+        items:
+          $ref: '#/definitions/COLLATERAL'
+  Link:
+    type: object
+    properties:
+      self:
+        type: string
+        maxLength: 2000
+        description: Current page link
+        example: null
+      first:
+        type: string
+        maxLength: 2000
+        description: First page link
+        example: null
+      prev:
+        type: string
+        maxLength: 2000
+        description: Next page link
+        example: null
+      next:
+        type: string
+        maxLength: 2000
+        description: Next page link
+        example: null
+      last:
+        type: string
+        maxLength: 2000
+        description: Last page link
+        example: null
+    required:
+      - self
+  Errors:
+    type: object
+    properties:
+      Errors:
+        type: array
+        items:
+          $ref: '#/definitions/Error'
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+        maxLength: 10
+        description: Código do erro
+        example: null
+      message:
+        type: string
+        maxLength: 100
+        description: Mensagem do erro
+        example: null
+    required:
+      - code
+      - message
+  CollaterallRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Data'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links

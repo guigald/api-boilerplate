@@ -1,0 +1,1 @@
+php artisan mailing:run

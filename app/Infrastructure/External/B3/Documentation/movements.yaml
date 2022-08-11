@@ -1,0 +1,1300 @@
+swagger: '2.0'
+info:
+  description: >-
+    Dados até D-1 das transações ocorridas nas contas do investidor em um
+    determinado período.
+  version: '1.2'
+  title: B3 Investidor - Movimentação
+schemes:
+  - https
+basePath: /api/movement/v2
+host: Caminho_backend
+tags:
+  - name: Derivatives
+  - name: Fixed Income
+  - name: Equities
+  - name: SecuritiesLending
+  - name: Treasury Bonds
+paths:
+  '/fixed-income/investors/{documentNumber}':
+    get:
+      tags:
+        - Fixed Income
+      summary: >-
+        Dados até D-1 das transações em renda fixa ocorridas nas contas do
+        investidor em um determinado período.   
+      operationId: FixedIncomeMovementGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: Número do documento
+          required: true
+        - in: query
+          name: referenceStartDate
+          type: string
+          format: date
+          description: Data inicial do período de consulta da informação
+          required: true
+        - in: query
+          name: referenceEndDate
+          type: string
+          format: date
+          description: Data fim do período de consulta da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/FixedIncomeMovementRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+  '/equities/investors/{documentNumber}':
+    get:
+      tags:
+        - Equities
+      summary: >-
+        Dados até D-1 das transações em ações ocorridas nas contas do investidor
+        em um determinado período. 
+      operationId: EquitiesMovementGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: Número do documento
+          required: true
+        - in: query
+          name: referenceStartDate
+          type: string
+          format: date
+          description: Data inicial do período de consulta da informação
+          required: true
+        - in: query
+          name: referenceEndDate
+          type: string
+          format: date
+          description: Data fim do período de consulta da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/EquitiesMovementRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+  '/securities-lending/investors/{documentNumber}':
+    get:
+      tags:
+        - SecuritiesLending
+      summary: >-
+        Dados até D-1 das transações em empréstimo de ativos ocorridas nas
+        contas do investidor em um determinado período.    
+      operationId: SecuritiesLendingMovementGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: Número do documento
+          required: true
+        - in: query
+          name: referenceStartDate
+          type: string
+          format: date
+          description: Data inicial do período de consulta da informação
+          required: true
+        - in: query
+          name: referenceEndDate
+          type: string
+          format: date
+          description: Data fim do período de consulta da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/SecuritiesLendingMovementRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+  '/treasury-bonds/investors/{documentNumber}':
+    get:
+      tags:
+        - Treasury Bonds
+      summary: >-
+        Dados até D-1 das transações em tesouro direto ocorridas nas contas do
+        investidor em um determinado período.
+      operationId: TreasuryBondsMovementGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: Número do documento
+          required: true
+        - in: query
+          name: referenceStartDate
+          type: string
+          format: date
+          description: Data inicial do período de consulta da informação
+          required: true
+        - in: query
+          name: referenceEndDate
+          type: string
+          format: date
+          description: Data fim do período de consulta da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/TreasuryBondsMovementRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+  '/derivatives/investors/{documentNumber}':
+    get:
+      tags:
+        - Derivatives
+      summary: >-
+        Dados até D-1 dos eventos corporativos de renda variável provisionados
+        por investidor.
+      operationId: DerivativesGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: 'Número do documento '
+          required: true
+        - in: query
+          name: referenceStartDate
+          type: string
+          format: date
+          description: Data inicial do período de consulta da informação
+          required: true
+        - in: query
+          name: referenceEndDate
+          type: string
+          format: date
+          description: Data fim do período de consulta da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/DerivativesRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+definitions:
+  DataDerivativesRsp:
+    type: object
+    properties:
+      derivativesPeriods:
+        $ref: '#/definitions/derivativesPeriod'
+  derivativesPeriod:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceStartDate:
+        type: string
+        format: date
+        description: Data inicial do período de consulta da informação
+        example: '2020-01-01'
+      referenceEndDate:
+        type: string
+        format: date
+        description: Data fim do período de consulta da informação
+        example: '2020-02-01'
+      derivatives:
+        type: array
+        items:
+          $ref: '#/definitions/derivatives'
+    required:
+      - documentNumber
+      - referenceStartDate
+      - referenceEndDate
+  derivatives:
+    type: object
+    properties:
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        maxLength: 100
+        description: Armazena as categorias de cada produto. ExRENDA VARIAVEL
+        example: XXXXX
+      productTypeName:
+        type: string
+        maxLength: 100
+        description: >-
+          Tipos de produtos utilizados em  renda variável. Dominio - ACOES -
+          BDRs - FUNDOS IMOBILIARIOS
+        example: XXXXX
+      movementType:
+        type: string
+        maxLength: 50
+        description: >-
+          Campo que identifica se é uma compra / venda; Emprestimo Liquidação /
+          registro; Juros
+        example: null
+      operationType:
+        type: string
+        enum:
+          - '529'
+          - '534'
+          - '537'
+        maxLength: 10
+        description: Tipo de operação (Débito / Crédito)
+        example: null
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      underlyingInstrument:
+        type: number
+        description: ''
+        example: null
+      quotedCurrency:
+        type: string
+        maxLength: 5
+        description: >-
+          Sigla utilizada para identificar a moeda em que o termo foi cotado
+          (Termo)
+        example: null
+      baseCurrency:
+        type: string
+        maxLength: 5
+        description: >-
+          Sigla utilizada para identificar a moeda em que o termo foi cotado
+          (Termo)
+        example: null
+      derivativeVariable:
+        type: string
+        maxLength: 30
+        description: >-
+          Campo que indica a mercadoria da ponta. Ex DI (SWAP)  Ex. BGI; DOL 
+          (Futuro)
+        example: null
+      derivativeCounterpartVariable:
+        type: string
+        maxLength: 120
+        description: Campo que indica a mercadoria da contraparte Ex. DOL (SWAP)
+        example: null
+      expirationDate:
+        type: string
+        description: Data de Vencimento Contrato
+        example: null
+      exercisePrice:
+        type: number
+        description: Valor do exercício da opção
+        example: null
+      participantName:
+        type: string
+        maxLength: 120
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      derivativeQuantity:
+        type: number
+        description: Quantidade do ativo
+        example: null
+      unitPrice:
+        type: number
+        description: Unit Price
+        example: null
+      operationValue:
+        type: number
+        description: Valor total da operação
+        example: null
+    required:
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - movementType
+      - operationType
+      - tickerSymbol
+      - underlyingInstrument
+      - quotedCurrency
+      - baseCurrency
+      - derivativeVariable
+      - derivativeCounterpartVariable
+      - participantName
+      - participantDocumentNumber
+      - derivativeQuantity
+      - unitPrice
+      - operationValue
+  DerivativesRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/DataDerivativesRsp'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links
+  DataEquitiesMovementRsp:
+    type: object
+    properties:
+      equitiesPeriods:
+        $ref: '#/definitions/EquitiesPeriod'
+  Link:
+    type: object
+    properties:
+      self:
+        type: string
+        description: Current page link
+        example: null
+      first:
+        type: string
+        description: First page link
+        example: null
+      prev:
+        type: string
+        description: Next page link
+        example: null
+      next:
+        type: string
+        description: Next page link
+        example: null
+      last:
+        type: string
+        description: Last page link
+        example: null
+    required:
+      - self
+  Errors:
+    type: object
+    properties:
+      Errors:
+        type: array
+        items:
+          $ref: '#/definitions/Error'
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+        enum:
+          - lista codigos de erro
+        maxLength: 10
+        description: Business error code.
+        example: null
+      message:
+        type: string
+        enum:
+          - lista titulos de erro
+        maxLength: 100
+        description: Brief business error message
+        example: null
+    required:
+      - code
+      - message
+  EquitiesPeriod:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceStartDate:
+        type: string
+        format: date
+        description: Data inicial do período de consulta da informação
+        example: '2020-01-01'
+      referenceEndDate:
+        type: string
+        format: date
+        description: Data fim do período de consulta da informação
+        example: '2020-02-01'
+      equitiesMovements:
+        type: array
+        items:
+          $ref: '#/definitions/EquitiesMovement'
+    required:
+      - documentNumber
+      - referenceStartDate
+      - referenceEndDate
+  EquitiesMovement:
+    type: object
+    properties:
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        maxLength: 100
+        description: Armazena as categorias de cada produto
+        example: XXXXX
+      productTypeName:
+        type: string
+        maxLength: 100
+        description: Tipos de produtos utilizados em  renda fixa
+        example: XXXXX
+      movementType:
+        type: string
+        maxLength: 50
+        description: >-
+          Campo que identifica se é uma compra / venda; Emprestimo Liquidação /
+          registro; Juros
+        example: Compra
+      operationType:
+        type: string
+        maxLength: 10
+        description: Tipo de operação (Débito / Crédito)
+        example: Crédito
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      corporationName:
+        type: string
+        maxLength: 250
+        description: Este campo possui o nome da instituição.
+        example: XXXXXX
+      participantName:
+        type: string
+        maxLength: 120
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      equitiesQuantity:
+        type: number
+        description: Quantidade do ativo
+        example: 15
+      unitPrice:
+        type: number
+        description: 'Preço unitário '
+        example: '7,90'
+      operationValue:
+        type: number
+        description: Valor total da operação
+        example: '118,50'
+    required:
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - movementType
+      - operationType
+      - tickerSymbol
+      - participantName
+      - participantDocumentNumber
+      - equitiesQuantity
+      - unitPrice
+      - operationValue
+  EquitiesMovementRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/DataEquitiesMovementRsp'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links
+  DataFixedIncomeMovementRsp:
+    type: object
+    properties:
+      fixedIncomes:
+        $ref: '#/definitions/FixedIncome'
+  FixedIncome:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceStartDate:
+        type: string
+        format: date
+        description: Data inicial do período de consulta da informação
+        example: '2020-01-01'
+      referenceEndDate:
+        type: string
+        format: date
+        description: Data fim do período de consulta da informação
+        example: '2020-02-01'
+      fixedIncomeMovements:
+        type: array
+        items:
+          $ref: '#/definitions/FixedIncomeMovement'
+    required:
+      - documentNumber
+      - referenceStartDate
+      - referenceEndDate
+  FixedIncomeMovement:
+    type: object
+    properties:
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        maxLength: 100
+        description: Armazena as categorias de cada produto
+        example: XXXXX
+      productTypeName:
+        type: string
+        maxLength: 100
+        description: Tipos de produtos utilizados em  renda fixa
+        example: XXXXX
+      movementType:
+        type: string
+        maxLength: 50
+        description: >-
+          Campo que identifica se é uma compra / venda; Emprestimo Liquidação /
+          registro; Juros
+        example: Compra
+      operationType:
+        type: string
+        maxLength: 10
+        description: Tipo de operação (Débito / Crédito)
+        example: Crédito
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      corporationName:
+        type: string
+        maxLength: 250
+        description: Este campo possui o nome da instituição.
+        example: XXXXXX
+      expirationDate:
+        type: string
+        format: date
+        description: Data de vencimento
+        example: null
+      participantName:
+        type: string
+        maxLength: 120
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      fixedIncomeQuantity:
+        type: number
+        description: Quantidade do ativo
+        example: 15
+      unitPrice:
+        type: number
+        description: 'Preço unitário '
+        example: '7,90'
+      operationValue:
+        type: number
+        description: Valor total da operação
+        example: '118,50'
+      assetDescription:
+        type: string
+        maxLength: 100
+        description: Mercadoria (Ex. DOL)
+        example: null
+      updatedUnitPriceMTM:
+        type: number
+        description: Preço unitário atualizado MTM (Metogologia cálculo Marcação a Mercado)
+        example: '1,01'
+      updateValueMTM:
+        type: number
+        description: Valor atualizado MTM (Metogologia cálculo Marcação a Mercado)
+        example: '1,01'
+    required:
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - movementType
+      - operationType
+      - tickerSymbol
+      - corporationName
+      - participantName
+      - participantDocumentNumber
+      - unitPrice
+      - operationValue
+      - updatedUnitPriceMTM
+      - updateValueMTM
+  FixedIncomeMovementRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/DataFixedIncomeMovementRsp'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links
+  SecuritiesLendingMovement:
+    type: object
+    properties:
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        maxLength: 100
+        description: Armazena as categorias de cada produto
+        example: XXXXX
+      productTypeName:
+        type: string
+        maxLength: 100
+        description: Tipos de produtos
+        example: XXXXX
+      movementType:
+        type: string
+        maxLength: 50
+        description: >-
+          Campo que identifica se é uma compra / venda; Emprestimo Liquidação /
+          registro; Juros
+        example: Compra
+      operationType:
+        type: string
+        maxLength: 10
+        description: Tipo de operação (Débito / Crédito)
+        example: Crédito
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      contractNumber:
+        type: integer
+        minimum: -2147483648
+        maximum: 2147483647
+        description: Número do contrato - Opcional Reembolso de ativo
+        example: null
+      corporationName:
+        type: string
+        maxLength: 250
+        description: Este campo possui o nome da instituição.
+        example: XXXXXX
+      sideLenderBorrowerName:
+        type: string
+        maxLength: 50
+        description: >-
+          Posição do Investidor (Tomador ou Doador) - Opcional Reembolso de
+          ativo 
+        example: null
+      securityLendingModality:
+        type: string
+        enum:
+          - Registrado
+          - D0
+          - D1
+        maxLength: 15
+        description: >-
+          Modalidade do tipo de contrato do empréstimo de ativos. Ex. Registrado
+          / D0 / D1
+        example: XXXXX
+      participantName:
+        type: string
+        maxLength: 120
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      securirtiesLendingQuantity:
+        type: number
+        description: Quantidade do ativo - Opcional Reembolso de ativo
+        example: 15
+      unitPrice:
+        type: number
+        description: Preço unitário - Opcional Reembolso de ativo
+        example: '7,90'
+      operationValue:
+        type: number
+        description: Valor total da operação
+        example: '118,50'
+    required:
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - movementType
+      - operationType
+      - tickerSymbol
+      - corporationName
+      - securityLendingModality
+      - participantName
+      - participantDocumentNumber
+      - operationValue
+  DataSecuritiesLendingMovementRsp:
+    type: object
+    properties:
+      securitiesLendingPeriod:
+        $ref: '#/definitions/SecuritiesLendingPeriod'
+  SecuritiesLendingPeriod:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceStartDate:
+        type: string
+        format: date
+        description: Data inicial do período de consulta da informação
+        example: '2020-01-01'
+      referenceEndDate:
+        type: string
+        format: date
+        description: Data fim do período de consulta da informação
+        example: '2020-02-01'
+      securityLendingMovements:
+        type: array
+        items:
+          $ref: '#/definitions/SecuritiesLendingMovement'
+    required:
+      - documentNumber
+      - referenceStartDate
+      - referenceEndDate
+  SecuritiesLendingMovementRsp:
+    type: object
+    properties:
+      Links:
+        $ref: '#/definitions/Link'
+      data:
+        $ref: '#/definitions/DataSecuritiesLendingMovementRsp'
+    required:
+      - Links
+  Data:
+    type: object
+    properties:
+      treasuryBondsPeriods:
+        $ref: '#/definitions/TreasuryBondsPeriod'
+  TreasuryBondsPeriod:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceStartDate:
+        type: string
+        format: date
+        description: Data inicial do período de consulta da informação
+        example: '2020-01-01'
+      referenceEndDate:
+        type: string
+        format: date
+        description: Data fim do período de consulta da informação
+        example: '2020-02-01'
+      treasuryBondsMovements:
+        type: array
+        items:
+          $ref: '#/definitions/TreasuryBondsMovement'
+    required:
+      - documentNumber
+      - referenceStartDate
+      - referenceEndDate
+  TreasuryBondsMovement:
+    type: object
+    properties:
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        maxLength: 100
+        description: Armazena as categorias de cada produto
+        example: XXXXX
+      productTypeName:
+        type: string
+        maxLength: 100
+        description: Tipos de produtos utilizados em  renda fixa
+        example: XXXXX
+      movementType:
+        type: string
+        maxLength: 50
+        description: >-
+          Campo que identifica se é uma compra / venda; Emprestimo Liquidação /
+          registro; Juros
+        example: Compra
+      operationType:
+        type: string
+        maxLength: 10
+        description: Tipo de operação (Débito / Crédito)
+        example: Crédito
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      assetDescription:
+        type: string
+        maxLength: 100
+        description: Nome do título do tesouro direto
+        example: null
+      participantName:
+        type: string
+        maxLength: 120
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      treasuryBondsQuantity:
+        type: number
+        description: Quantidade do ativo
+        example: 15
+      unitPrice:
+        type: number
+        description: 'Preço unitário '
+        example: '7,90'
+      operationValue:
+        type: number
+        description: Valor total da operação
+        example: '118,50'
+      isinCode:
+        type: string
+        description: Código Isin.
+        maxLength: 50
+        example: null
+    required:
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - movementType
+      - operationType
+      - tickerSymbol
+      - assetDescription
+      - participantName
+      - participantDocumentNumber
+      - treasuryBondsQuantity
+      - unitPrice
+      - operationValue
+      - isinCode
+  TreasuryBondsMovementRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Data'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links
+  BoxMovement:
+    type: object
+    properties:
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        description: Armazena as categorias de cada produto
+        example: XXXXX
+      productTypeName:
+        type: string
+        description: Tipos de produtos utilizados em  renda fixa
+        example: XXXXX
+      movementType:
+        type: string
+        description: >-
+          Campo que identifica se é uma compra / venda; Emprestimo Liquidação /
+          registro; Juros
+        example: Compra
+      operationType:
+        type: string
+        description: Tipo de operação (Débito / Crédito)
+        example: Crédito
+      tickerSymbol:
+        type: string
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      underlyingInstrument:
+        type: string
+        description: Identificador do instrumento subjacente. Ex.B3SA3
+        example: null
+      participantName:
+        type: string
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      boxQuantity:
+        type: number
+        description: Quantidade do ativo
+        example: 15
+      unitPrice:
+        type: number
+        description: 'Preço unitário '
+        example: '7,90'
+      operationValue:
+        type: number
+        description: Valor total da operação
+        example: '118,50'
+    required:
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - movementType
+      - operationType
+      - tickerSymbol
+      - underlyingInstrument
+      - participantName
+      - boxQuantity
+      - unitPrice
+      - operationValue
+  Pagination:
+    type: object
+    properties:
+      pageNumber:
+        type: integer
+        description: >-
+          Current page number. Indica a pagina atual que está sendo enviada em
+          resposta ao request. 
+        example: null
+      numberOfPages:
+        type: integer
+        description: >-
+          Provides the total number of pages. Quantidade total de páginas para a
+          requisição inicial. 
+        example: null
+      itemsPerPage:
+        type: integer
+        description: Define the quantity of items per page. Quantidade de itens por página.
+        example: null
+      nextPageURL:
+        type: string
+        description: >-
+          url to retrieve the next data page in a multipage query return url em
+          que a próxima página deve ser requisitada.
+        example: null
+      lastPageIndicator:
+        type: boolean
+        description: >-
+          Indicates if the page is the last page Informa se a página é a última
+          página ou não.
+        example: null
+    required:
+      - pageNumber
+      - numberOfPages
+      - itemsPerPage
+      - lastPageIndicator
+  BusinessError:
+    type: object
+    properties:
+      code:
+        type: string
+        enum:
+          - 422.01
+          - 422.02
+          - 422.03
+          - 422.04
+          - 422.05
+          - 422.06
+          - 422.07
+          - 422.08
+          - 422.09
+          - 422.1
+          - 422.11
+        description: Codigo de status de erro de negocio
+        example: null
+      message:
+        type: string
+        description: >-
+          Texto/descrição do status do erro de negocio
+
+          - 422.01 - Formato inválido para CPF/CNPJ
+
+          - 422.02 - Participante nao autorizado acessar CPF/CNPJ
+
+          - 422.03 - CPF/CNPJ nao localizado
+
+          - 422.04 - Formato inválido para Data de Referência AAAA-MM-DD
+
+          - 422.05 - Data de referência deve ser inferior a data atual
+
+          - 422.06 - A data final é menor que data inicial
+
+          - 422.07 - A data inicial de referência nao pode ser inferior ao ano
+          de 2018
+
+          - 422.08  - A data inicial não pode ser inferior ao ano
+
+          - 422.09 – Data final deve ser inferior a data atual.
+
+          - 422.10 – Formato inválido para Data Inicial AAAA-MM-DD.
+
+          - 422.11 – Formato inválido para Data Final AAAA-MM-DD. 
+        example: null
+  TermMovement:
+    type: object
+    properties:
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      productCategoryName:
+        type: string
+        description: Armazena as categorias de cada produto
+        example: XXXXX
+      productTypeName:
+        type: string
+        description: 'Tipos de produtos '
+        example: XXXXX
+      movementType:
+        type: string
+        description: >-
+          Campo que identifica se é uma compra / venda; Emprestimo Liquidação /
+          registro; Juros
+        example: Compra
+      operationType:
+        type: string
+        description: Tipo de operação (Débito / Crédito)
+        example: Crédito
+      tickerSymbol:
+        type: string
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXXXX
+      underlyingInstrument:
+        type: string
+        description: Identificador do instrumento subjacente. Ex.B3SA3
+        example: null
+      quotedCurrency:
+        type: string
+        description: Sigla utilizada para identificar a moeda em que o termo foi cotado
+        example: null
+      baseCurrency:
+        type: string
+        description: Sigla utilizada para identificar a moeda em que o termo foi cotado
+        example: null
+      expirationDate:
+        type: string
+        format: date
+        description: Data de vencimento
+        example: null
+      participantName:
+        type: string
+        description: 'Nome do participante (Corretora) '
+        example: XXXXX
+      forwardQuantity:
+        type: number
+        description: Quantidade do ativo
+        example: 15
+      unitPrice:
+        type: number
+        description: 'Preço unitário '
+        example: '7,90'
+      operationValue:
+        type: number
+        description: Valor total da operação
+        example: '118,50'
+    required:
+      - referenceDate
+      - productCategoryName
+      - productTypeName
+      - movementType
+      - operationType
+      - tickerSymbol
+      - underlyingInstrument
+      - quotedCurrency
+      - baseCurrency
+      - expirationDate
+      - participantName
+      - forwardQuantity
+      - unitPrice
+      - operationValue
+  FixedIncomePeriod:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        description: 'Número do documento '
+        example: 00123456789
+      referenceStartDate:
+        type: string
+        format: date
+        description: Data inicial do período de consulta da informação
+        example: '2020-01-01'
+      referenceEndDate:
+        type: string
+        format: date
+        description: Data fim do período de consulta da informação
+        example: '2020-02-01'
+      fixedIncomeMovementList:
+        type: array
+        items:
+          $ref: '#/definitions/FixedIncomeMovement'
+    required:
+      - documentNumber
+      - referenceStartDate
+      - referenceEndDate

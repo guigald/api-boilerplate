@@ -1,0 +1,131 @@
+swagger: '2.0'
+info:
+  description: 'Serviço para obter informação se o investidor realizou autorização dos dados para a Fintech.'
+  version: '1.0'
+  title: 'AuthorizationInvestor'
+schemes:
+  - https
+basePath: /api/authorization-investor/v1
+host: Caminho_backend
+tags:
+  - name: Authorization Investor
+paths:
+  /authorizations/investors/{documentNumber}:
+    get:
+      tags:
+        - Authorization Investor
+      summary: ''
+      operationId: AuthorizationInvestorPost
+      consumes: 
+        - application/json
+      parameters: 
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 18
+          description: 'Documento do investidor que será consultado.'
+          required: true
+      responses: 
+        '200': 
+          description: Ok
+          schema:
+            $ref: '#/definitions/AutorizationRspGet'
+          headers:
+            x-v:
+              type: string
+              description: 'Versão da api. Ex 1.0.0'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Errors'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '500':
+          description: Internal Server Error
+definitions:
+  DataAuthorizationRsp:
+    type: object
+    properties:
+      authorizationIndicator:
+          type: boolean
+          description: 'Indicador de Autorização do Investidor.'
+          example: 
+    required:
+      - authorizationIndicator
+
+  Errors:
+    type: object
+    properties:
+        Errors:
+            type: array
+            items:
+                $ref: '#/definitions/Error'
+  Error:
+    type: object
+    properties:
+      code:
+          type: string
+          maxLength: 10
+          description: 'Código do erro.'
+          example: 
+      title:
+          type: string
+          maxLength: 100
+          description: 'Mensagem do erro.'
+          example: 
+      detail:
+          type: string
+          maxLength: 2000
+          description: 'Informações complementares sobre o erro.'
+          example: 
+    required:
+      - code
+      - title
+      - detail
+
+  Link:
+    type: object
+    properties:
+      self:
+          type: string
+          maxLength: 2000
+          description: 'Current page link'
+          example: 
+      first:
+          type: string
+          maxLength: 2000
+          description: 'First page link'
+          example: 
+      prev:
+          type: string
+          maxLength: 2000
+          description: 'Next page link'
+          example: 
+      next:
+          type: string
+          maxLength: 2000
+          description: 'Next page link'
+          example: 
+      last:
+          type: string
+          maxLength: 2000
+          description: 'Last page link'
+          example: 
+    required:
+      - self
+
+  AutorizationRspGet:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/DataAuthorizationRsp'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links

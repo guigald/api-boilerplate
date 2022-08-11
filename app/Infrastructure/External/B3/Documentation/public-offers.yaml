@@ -1,0 +1,266 @@
+swagger: '2.0'
+info:
+  description: Dados até D-1 sobre a participação do investidor em ofertas públicas.
+  version: '1.0'
+  title: B3 Investidor - Oferta Publica
+schemes:
+  - https
+basePath: /api/public-offers/v2
+host: Caminho_backend
+tags:
+  - name: Public Offers
+paths:
+  '/investors/{documentNumber}':
+    get:
+      tags:
+        - Public Offers
+      summary: Dados até D-1 sobre a participação do investidor em ofertas públicas.
+      operationId: PublicOffersGet
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: documentNumber
+          type: string
+          maxLength: 14
+          description: Número do documento
+          required: true
+        - in: query
+          name: referenceStartDate
+          type: string
+          format: date
+          description: Data inicial do período de consulta da informação
+          required: true
+        - in: query
+          name: referenceEndDate
+          type: string
+          format: date
+          description: Data fim do período de consulta da informação
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: >-
+            Number of the page being requested (the value of the first page is
+            1).
+          required: false
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/PublicOffersRsp'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Errors'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal server error
+        '503':
+          description: Service Unavailable
+definitions:
+  Data:
+    type: object
+    properties:
+      periods:
+        $ref: '#/definitions/Period'
+  Link:
+    type: object
+    properties:
+      self:
+        type: string
+        description: Current page link
+        example: null
+      first:
+        type: string
+        description: First page link
+        example: null
+      prev:
+        type: string
+        description: Next page link
+        example: null
+      next:
+        type: string
+        description: Next page link
+        example: null
+      last:
+        type: string
+        description: Last page link
+        example: null
+    required:
+      - self
+  Errors:
+    type: object
+    properties:
+      Errors:
+        type: array
+        items:
+          $ref: '#/definitions/Error'
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+        description: Business error code.
+        example: null
+      message:
+        type: string
+        description: Brief business error message
+        example: null
+    required:
+      - code
+      - message
+  Period:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+        maxLength: 14
+        description: 'Número do documento '
+        example: 00123456789
+      referenceStartDate:
+        type: string
+        format: date
+        description: Data inicial do período de consulta da informação
+        example: '2020-01-01'
+      referenceEndDate:
+        type: string
+        format: date
+        description: Data fim do período de consulta da informação
+        example: '2020-02-01'
+      publicOffers:
+        type: array
+        items:
+          $ref: '#/definitions/PublicOffer'
+    required:
+      - documentNumber
+      - referenceStartDate
+      - referenceEndDate
+  PublicOffer:
+    type: object
+    properties:
+      referenceDate:
+        type: string
+        format: date
+        description: Data de referência da informação
+        example: '2020-01-01'
+      tickerSymbol:
+        type: string
+        maxLength: 35
+        description: >-
+          Código que identifica um instrumento negociado/registrado em bolsa de
+          valores. O símbolo é uma forma curta e conveniente de identificar um
+          instrumento.
+        example: XXX
+      corporationName:
+        type: string
+        maxLength: 250
+        description: Nome da instituição emissora
+        example: XXX
+      specificationCode:
+        type: string
+        maxLength: 10
+        description: 'Código de especificação do ativo Ex. ON, PN'
+        example: XXX
+      publicOfferName:
+        type: string
+        maxLength: 100
+        description: 'Nome da Oferta Pública Ex KINEA Renda, Imobiliária FII'
+        example: XXX
+      isin:
+        type: string
+        maxLength: 12
+        description: >-
+          INTERNATIONAL SECURITIES IDENTIFICATION NUMBER – É uma padronização
+          internacional na codificação de títulos financeiros, atribuindo a cada
+          ativo um código único de identificação. O código para os títulos e
+          valores mobiliários brasileiros apresenta a estrutura BR AAAA BBB CC
+          7, onde a) os dois primeiros caracteres (BR) identificam o código do
+          BRASIL; b) os quatro caracteres (AAAA) são alfanuméricos e identificam
+          o emissor; c) os três caracteres (BBB) são alfanuméricos e identificam
+          o tipo de ativo, podendo ter sequência automática na segunda posição
+          (sequência 1) e na terceira posição (sequência 2) ou não ter qualquer
+          sequência; d) os dois caracteres (CC) são alfanuméricos e identificam
+          a espécie, quando se tratar de ações, ou representam uma sequência
+          automática, para identificar cada emissão de título e valor
+          mobiliário, quando se tratar de outras categorias; e e) o último
+          caractere (7) é o dígito de controle.
+        example: XXX
+      participantName:
+        type: string
+        maxLength: 120
+        description: Nome do participante (corretora)
+        example: XXX
+      participantDocumentNumber:
+        type: string
+        maxLength: 14
+        description: Participant document number
+        example: null
+      allocatedQuantity:
+        type: number
+        description: Quantidade alocada
+        example: 2
+      publicOfferPrice:
+        type: number
+        description: Valor do preço atribuído ao ativo na oferta pública
+        example: '10,02'
+      maximumPrice:
+        type: number
+        description: 'Valor Preço Máximo da Oferta Pública '
+        example: '15,02'
+      totalPublicOfferPrice:
+        type: number
+        description: 'Valor Total da Oferta Pública do Investidor '
+        example: '10,02'
+      publicOfferModality:
+        type: string
+        description: Descrição da modalidade de reserva
+        example: XXX
+      reserveQuantity:
+        type: number
+        description: 'Quantidade que demonstra o quanto o investidor deseja reservar '
+        example: 10
+      reservePrice:
+        type: number
+        description: 'Valor que representa a quantidade reservada '
+        example: '9,02'
+      settlementDate:
+        type: string
+        format: date
+        description: Data da liquidação da oferta
+        example: '2020-01-01'
+    required:
+      - referenceDate
+      - tickerSymbol
+      - corporationName
+      - specificationCode
+      - publicOfferName
+      - isin
+      - participantName
+      - participantDocumentNumber
+      - allocatedQuantity
+      - publicOfferPrice
+      - maximumPrice
+      - totalPublicOfferPrice
+      - publicOfferModality
+      - reserveQuantity
+      - reservePrice
+      - settlementDate
+  PublicOffersRsp:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Data'
+      Links:
+        $ref: '#/definitions/Link'
+    required:
+      - Links
